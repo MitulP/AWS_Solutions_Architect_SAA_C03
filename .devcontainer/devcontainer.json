@@ -1,0 +1,41 @@
+{
+  "name": "My Codespace with AWS",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-azuretools.vscode-docker",
+        "github.copilot",
+        "amazonwebservices.aws-toolkit-vscode"
+      ]
+    }
+  },
+
+  "forwardPorts": [3000, 8000],
+
+  "containerEnv": {
+    "APP_ENV": "development"
+  },
+
+  // Secure AWS credentials via GitHub Codespaces Secrets
+  "remoteEnv": {
+    "AWS_ACCESS_KEY_ID": "${{ secrets.AWS_ACCESS_KEY_ID }}",
+    "AWS_SECRET_ACCESS_KEY": "${{ secrets.AWS_SECRET_ACCESS_KEY }}",
+    "AWS_DEFAULT_REGION": "${{ secrets.AWS_DEFAULT_REGION }}"
+  },
+
+  // Run after container builds
+  "postCreateCommand": "aws --version",
+
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11"
+    }
+  }
+}
